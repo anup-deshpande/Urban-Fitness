@@ -180,10 +180,46 @@ body{
   padding:0px 0px 0px 10px;
 }
 
+.feedback-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 80%;
+	border-radius: 5px;
+	position: fixed;
+	left: 440px;
+	right:1.5px;
+	top:140px;
+	color: Black;
+	width: 280px;
+	height: 450px;
+	font-family: 'Montserrat', sans-serif;
+	font-size:14px;
+}
+
+.feedback-card:hover {
+  box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
+}
+
+.feedback-card-container {
+  padding: 2px 16px;
+}
+
+.feedback-card img{
+	width: 250px;
+	height: 210px;
+}
+
 #index-paragraph{
 	margin-left:65px;
 	margin-top:40px;
 	font-size:16px;
+}
+
+#feedback-paragraph{
+	margin-left:250px;
+	width:400px;
+	height:100px;
+	text-align:justify;
 }
 
 #information{

@@ -16,33 +16,40 @@
 
 	   <div class="topnav">
 	      <a href="#">Sign In</a>
-	      <a href="myitems.html">My Workouts</a>
+	      <a href="myitems">My Workouts</a>
 	      <a href="#">Cart</a>
 	   </div>
 
 	   <div class="categories-main-content">
-		     <h4>Abs & Core</h4>
+			 <%
+			 for(var i=0; i< data.categories.length; i++){ %>
+					 <table>
+					 		<thead>
+					 			<tr>
+					 				<th><%= data.categories[i] %></th>
+					 			</tr>
+					 		</thead>
 
-         <ul>
-			        <li><a href="item.html">Reverse Crunch</a></li>
-			        <li><a href="item.html">Flutter Kicks</a></li>
-			        <li><a href="item.html">Side Plank</a></li>
-		     </ul>
+							<tbody>
 
-         <h4>Legs</h4>
+						<% for(var j=0;j<data.items.length;j++){
+							if(data.categories[i]== data.items[j].muscleGroup){ %>
+								<tr>
+									<td><%= data.items[j].name %></td>
+								</tr>
+						<%	}
+						} %>
+					</tbody>
 
-         <ul>
-			        <li><a href="item.html">Leg Press</a></li>
-			        <li><a href="item.html">Leg Extension</a></li>
-			        <li><a href="item.html">Weighted squats</a></li>
-		    </ul>
+					 </table>
+			<%	 } %>
 	   </div>
 
 	<div class="site-navigation">
 	<nav>
 	<ul>
-		<li><a href="index.html"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-		<li><a href="categories.html" class="active"><i class="fa fa-list-ul" aria-hidden="true"></i> Categories</a></li>
+		<li><a href="home"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+		<li><a href="categories" class="active"><i class="fa fa-list-ul" aria-hidden="true"></i> Categories</a></li>
 		<li><a href="#"><i class="fa fa-archive" aria-hidden="true"></i> Store</a></li>
 		<li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
 		<li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> Contact</a></li>

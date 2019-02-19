@@ -1,6 +1,6 @@
 var express=require('express');
 var app=express();
-var routes=require('./routes/RouteHandler.js');
+var routes=require('./controller/catalogController.js');
 
 app.set('view engine','ejs');
 app.use('/assets',express.static('assets'));
