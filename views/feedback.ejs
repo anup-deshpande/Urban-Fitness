@@ -5,8 +5,10 @@
 	<head>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
-	<link href="/assets/styles.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/stylesheet/styles.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 	<meta charset="UTF-8">
 	<title>Rating | Urban Fitness</title>
 	</head>
@@ -15,51 +17,32 @@
 
 	<% include partials/header.ejs %>
 
+	<% include partials/user-navigation.ejs %>
 
-	<div class="topnav">
-
-	<a href="#">Sign In</a>
-	<a href="myitems">My Workouts</a>
-	<a href="#">Cart</a>
+	<div class="main-content">
+		<h3>Give your feedback for</h3>
+		<a href="/categories" class="button Back-button"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+		<img src='../assets/images/item2.gif' alt="No Image Found">
+		<h2>Lunges</h2>
+		<h4>Muscle Group : Leg</h4>
+		<p>1. Stand tall with feet hip-width apart. Engage core.2. Take a big step forward with right leg and start to shift weight forward so heel hits the floor first.3. Lower body until right thigh is parallel to floor and right shin is vertical (it's okay if knee shifts forward a little as long as it doesn't go past right toe). If mobility allows, lightly tap left knee to ground while keeping weight in right heel.4. Press into right heel to drive back up to starting position.5.Repeat on the other side.</p>
+		<a href="/myitems" class="button Confirm-Rate-button"><i class="fa fa-check-circle"></i> Confirm Rating</a>
+		<a href="#" class="button Designed-It-button"><i class="fa fa-pencil" aria-hidden="true"></i> Designed It</a>
 
 	</div>
 
 
-  <div class="feedback-card">
+	<h4 id="rating-label"> Rate this workout: </h4>
 
-    <div class="feedback-card-container">
-		   <!-- <h3>Give your feedback for</h3> !-->
-		    <img src="http://johnsifferman.com/img/leg_press.jpg" alt="Leg press Image">
-        <hr style="border: 0.5px solid black;" />
-		    <h2>The Leg Press</h2>
-		    <h4>Muscle Group : Leg</h4>
-		    <p id="feedback-paragraph">The leg press is a great exercise machine for developing the quadriceps of the thigh and your gluteal muscles.</p>
-    </div>
-
-	  <div class="rating-class">
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star checked"></span>
-		<span class="fa fa-star"></span>
-	  </div>
-
-  </div>
-
-	<div class="site-navigation">
-	<nav>
-	<ul>
-		<li><a href="home"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-		<li><a href="categories" class="active"><i class="fa fa-list-ul" aria-hidden="true"></i> Categories</a></li>
-		<li><a href="#"><i class="fa fa-archive" aria-hidden="true"></i> Store</a></li>
-		<li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
-		<li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> Contact</a></li>
-
-	</ul>
-	</nav>
+	<div class="feedback-rating">
+		<input type="radio" name="star" id="star1"><label for="star1"></label>
+		<input type="radio" name="star" id="star2"><label for="star2"></label>
+		<input type="radio" name="star" id="star3"><label for="star3"></label>
+		<input type="radio" name="star" id="star4"><label for="star4"></label>
+		<input type="radio" name="star" id="star5"><label for="star5"></label>
 	</div>
 
-
+	<% include partials/site-navigation.ejs %>
 	<% include partials/footer.ejs %>
 
 </body>

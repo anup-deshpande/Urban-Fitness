@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/assets/stylesheet/styles.css" rel="stylesheet" type="text/css"/>
+
+    <title>Contact | Urban Fitness</title>
+  </head>
+  <body>
+    <% include partials/header.ejs %>
+    <% include partials/user-navigation.ejs %>
+    <% include partials/site-navigation.ejs %>
+
+
+
+    <div class="contact-us-card">
+      <img src="../assets/images/contact-card-background.jpg" alt="contact-card-background not found" style="width:100%">
+      <div class="card-container">
+        <table class="contact-us-form">
+          <tr>
+              <td><label for="FullName">Full Name : </label></td>
+              <td><input type="text" id="FullName" placeholder="Enter Full Name"></td>
+          </tr>
+          <tr>
+              <td><label for="Email">Email : </label></td>
+              <td><input type="email" id="Email" placeholder="Enter Email"></td>
+          </tr>
+          <tr>
+            <td><label for="Phone">Phone : </label></td>
+            <td><input type="tel" id="Phone" placeholder="Enter Phone Number"></td>
+          </tr>
+          <tr>
+            <td><label for="Message">Message : </label></td>
+            <td><textarea id="Message" placeholder="Your Comments"></textarea></td>
+          </tr>
+          <tr>
+            <td colspan="2" id="submit-button-row"><a href="#" class="Submit-button">Submit</a></td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="text-over-image">
+      <h2>Contact us</h2>
+      <h4>Feel free to drop us a line below</h4>
+    </div>
+
+
+    <% include partials/footer.ejs %>
+  </body>
+</html>

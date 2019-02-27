@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 
 	<head>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
-	<link href="/assets/styles.css" rel="stylesheet" type="text/css"/>
+	<link href="/assets/stylesheet/styles.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<meta charset="UTF-8">
 	<title>Workout | Urban Fitness</title>
@@ -15,30 +15,18 @@
 
 	<% include partials/header.ejs %>
 
-
-	<div class="topnav">
-
-	<a href="#">Sign In</a>
-	<a href="myitems">My Workouts</a>
-	<a href="#">Cart</a>
-
-	</div>
+	<% include partials/user-navigation.ejs %>
 
 	<div class="main-content">
-		<h6>Home > Categories > Item</h6>
-		<img src="http://johnsifferman.com/img/leg_press.jpg" alt="No Image Found">
-		<h2>The Leg Press</h2>
-		<h4>Muscle Group : Leg</h4>
-		<a href="myitems" class="button Save-button"><i class="fa fa-bookmark" aria-hidden="true"></i> Save</a>
-		<a href="feedback" class="button Rate-button"><i class="fa fa-star" aria-hidden="true"></i> Rate</a>
+		<h6><a href="/home">Home</a> > <a href="/categories">Categories</a> > <a href="#"><%= data.item.itemName %></a></h6>
+		<a href="/categories" class="button Back-button"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+		<img src='<%= data.item.imageURL %>' alt="No Image Found">
+		<h2><%= data.item.itemName %></h2>
+		<h4>Muscle Group : <%= data.item.catalogCategory %></h4>
+		<a href="/myitems" class="button Save-button"><i class="fa fa-bookmark" aria-hidden="true"></i> Save</a>
+		<a href="/feedback" class="button Rate-button"><i class="fa fa-star" aria-hidden="true"></i> Rate</a>
 
-		<p>1. Using a leg press machine, sit down on the machine and place your legs on the platform directly in front of you at a medium foot stance. <br><br>
-		2. Lower the safety bars holding the weighted platform in place and press the platform all the way up until your legs are fully extended in front of you. <br><br>
-		3. As you inhale, slowly lower the platform until your upper and lower legs make a 90-degree angle.
-		Pushing mainly with the heels of your feet and using the quadriceps go back to the starting position as you exhale.<br><br>
-		4. Repeat for the recommended amount of repetitions and ensure to lock the safety pins properly once you are done. You do not want that platform falling on you fully loaded.<br><br>
-		<strong>Caution:</strong> Always check to make sure that when you re-rack the weight the platform is securely locked.
-		</p>
+		<p><%= data.item.Description %></p>
 
 
 
@@ -52,22 +40,7 @@
 		<span class="fa fa-star"></span>
 	</div>
 
-
-
-	<div class="site-navigation">
-	<nav>
-	<ul>
-		<li><a href="home"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-		<li><a href="categories" class="active"><i class="fa fa-list-ul" aria-hidden="true"></i> Categories</a></li>
-		<li><a href="#"><i class="fa fa-archive" aria-hidden="true"></i> Store</a></li>
-		<li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
-		<li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> Contact</a></li>
-
-	</ul>
-	</nav>
-	</div>
-
-
+	<% include partials/site-navigation.ejs %>
 	<% include partials/footer.ejs %>
 
 </body>

@@ -4,7 +4,7 @@
 	   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	   <link href="https://fonts.googleapis.com/css?family=Raleway:200" rel="stylesheet">
 	   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-     <link href="/assets/styles.css" rel="stylesheet" type="text/css"/>
+     <link href="/assets/stylesheet/styles.css" rel="stylesheet" type="text/css"/>
 
 	    <meta charset="UTF-8">
 	    <title>Categories | Urban Fitness</title>
@@ -13,29 +13,26 @@
   <body>
 
 	  <% include partials/header.ejs %>
-
-	   <div class="topnav">
-	      <a href="#">Sign In</a>
-	      <a href="myitems">My Workouts</a>
-	      <a href="#">Cart</a>
-	   </div>
+		<% include partials/user-navigation.ejs %>
+		<% include partials/site-navigation %>
 
 	   <div class="categories-main-content">
+			 <h6><a href="/home">Home</a> > <a href="#">Categories</a></h6>
 			 <%
-			 for(var i=0; i< data.categories.length; i++){ %>
+			 for(var i=0;i<data.categories.length;i++){ %>
 					 <table>
 					 		<thead>
 					 			<tr>
-					 				<th><%= data.categories[i] %></th>
+					 				<th><%=data.categories[i] %></th>
 					 			</tr>
 					 		</thead>
 
 							<tbody>
 
 						<% for(var j=0;j<data.items.length;j++){
-							if(data.categories[i]== data.items[j].muscleGroup){ %>
+							if(data.categories[i]==data.items[j].catalogCategory){ %>
 								<tr>
-									<td><%= data.items[j].name %></td>
+									<td><a href="/categories/item?itemCode=<%= data.items[j].itemCode %>"><%= data.items[j].itemName %></a></td>
 								</tr>
 						<%	}
 						} %>
@@ -45,18 +42,6 @@
 			<%	 } %>
 	   </div>
 
-	<div class="site-navigation">
-	<nav>
-	<ul>
-		<li><a href="home"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-		<li><a href="categories" class="active"><i class="fa fa-list-ul" aria-hidden="true"></i> Categories</a></li>
-		<li><a href="#"><i class="fa fa-archive" aria-hidden="true"></i> Store</a></li>
-		<li><a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> About</a></li>
-		<li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> Contact</a></li>
-
-	</ul>
-	</nav>
-	</div>
 
 	<% include partials/footer.ejs %>
 

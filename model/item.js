@@ -1,53 +1,63 @@
 class item{
 
 
-  constructor(id,name,muscleGroup,description,rating,imageURL){
-      this._id=id;
-      this._name=name;
-      this._muscleGroup=muscleGroup;
-      this._description=description;
-      this._rating=rating;
-      this._imageURL=imageURL;
+  constructor(itemCode,itemName,catalogCategory,Description,Rating,imageURL){
+      this.itemCode=itemCode;
+      this.itemName=itemName;
+      this.catalogCategory=catalogCategory;
+      this.Description=Description;
+      this.Rating=Rating;
+      this.imageURL=imageURL;
   }
 
-  get id(){
-    return this._id;
+  get itemCode(){
+    return this._itemCode;
   }
 
-  set id(value){
-    this._id=value;
+  set itemCode(value){
+    this._itemCode=value;
   }
 
-  get name(){
-    return this._name;
+  get itemName(){
+    return this._itemName;
   }
 
-  set name(value){
-    this._name=value;
+  set itemName(value){
+    this._itemName=value;
   }
 
-  get muscleGroup(){
-    return this._muscleGroup;
+  get catalogCategory(){
+    return this._catalogCategory;
   }
 
-  set muscleGroup(value){
-    this._muscleGroup=value;
+  set catalogCategory(value){
+    this._catalogCategory=value;
   }
 
-  get rating(){
-    return this._rating;
+  get Rating(){
+    return this._Rating;
   }
 
-  set rating(value){
-    this._rating=value;
+  set Rating(value){
+    this._Rating=value;
   }
 
-  get description(){
-    return this._description;
+  get Description(){
+    return this._Description;
   }
 
-  set description(value){
-    this._description=value;
+  set Description(value){
+    this._Description=value;
+  }
+
+  get imageURL(){
+  
+    return this._imageURL;
+  }
+
+  set imageURL(value){
+
+    this._imageURL=value;
   }
 }
 
