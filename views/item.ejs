@@ -23,12 +23,22 @@
 		<img src='<%= data.item.imageURL %>' alt="No Image Found">
 		<h2><%= data.item.itemName %></h2>
 		<h4>Muscle Group : <%= data.item.catalogCategory %></h4>
-		<a href="/myitems" class="button Save-button"><i class="fa fa-bookmark" aria-hidden="true"></i> Save</a>
-		<a href="/feedback" class="button Rate-button"><i class="fa fa-star" aria-hidden="true"></i> Rate</a>
+
+		<form id="form-saveIt" method="post" action="/profile/myitems">
+			<input type="hidden" name="itemCode" value="<%= data.item.itemCode %>">
+			<input type="hidden" name="itemName" value="<%= data.item.itemName %>">
+			<input type="hidden" name="itemRating" value="<%= data.item.Rating %>">
+			<input type="hidden" name="category" value="<%= data.item.catalogCategory %>">
+			<button class="button Save-button" type="submit" name="action" value="saveIt"><i class="fa fa-bookmark" aria-hidden="true"></i>Save</button>
+		</form>
+
+
+		<form id="form-rateIt" method="post" action="/feedback">
+			<input type="hidden" name="item" value="<%= data.item %>">
+			<button class="button Rate-button" type="submit" name="action" value="rateIt"><i class="fa fa-star" aria-hidden="true"></i>Rate</button>
+		</form>
 
 		<p><%= data.item.Description %></p>
-
-
 
 	</div>
 

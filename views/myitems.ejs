@@ -35,45 +35,28 @@
 			</thead>
 
 			<tbody>
-			<tr>
-				<td><i class="fa fa-user fa-lg" aria-hidden="true"></i><a href="/categories"> Leg Press</a></td>
-				<td>Leg</td>
+			<% for(var j=0;j<UserItems.length;j++){ %>
+				<tr>
+				<td><a href="#"><%= UserItems[j].itemName %></a></td>
+				<td><%= UserItems[j].catalogCategory %></td>
+
 				<td>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star checked"></span>
+
 					<span class="fa fa-star checked"></span>
 					<span class="fa fa-star"></span>
+
 				</td>
 				<td><a href="/feedback" class="button Update-button">Update</a></td>
-				<td><a href="#" class="button Delete-button">Delete</a></td>
-			</tr>
-			<tr>
-				<td><a href="/categories">Flutter Kicks</a></td>
-				<td>Abs & Core</td>
 				<td>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star"></span>
-					<span class="fa fa-star"></span>
+
+					<form id="form-deleteIt" method="post" action="/profile/myitems">
+						<input type="hidden" name="itemCode" value="<%= UserItems[j].itemCode %>">
+						<button class="button Delete-button" type="submit" name="action" value="delete">Delete</button>
+					</form>
 				</td>
-				<td><a href="/feedback" class="button Update-button">Update</a></td>
-				<td><a href="#" class="button Delete-button">Delete</a></td>
 			</tr>
-			<tr>
-			<td><a href="/categories">Reverse Crunch</a></td>
-			<td>Abs & Core</td>
-			<td>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star checked"></span>
-			</td>
-			<td><a href="/feedback" class="button Update-button">Update</a></td>
-			<td><a href="#" class="button Delete-button">Delete</a></td>
-			</tr>
+
+			<%}%>
 			</tbody>
 		</table>
 
