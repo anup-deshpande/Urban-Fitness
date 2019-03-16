@@ -37,10 +37,8 @@ router.get('/categories',function(req,res) {
 
 router.get('/categories/item',function(req,res) {
   var itemCode=req.query.itemCode;
-
-  //console.log("passed is : "+itemCode);
   var item= itemDb.getItem(itemCode);
-  //console.log("item is "+ item);
+
   var data= {
     item: item
   };
@@ -62,11 +60,12 @@ router.get('/categories/item',function(req,res) {
 router.get('/myitems',function(req,res) {
   if (req.session.theUser){
       if (req.session.userProfile){
-
-          res.render('myitems',{UserItems:req.session.userProfile});
+        let userdb=require('../model/userprofile');
+        let useritems=userdb.getUserItems();
+        res.render('myitems',{UserItems:useritems});
       }
   } else{
-    res.send('No session Found');
+    res.send('Please login to continue..');
   }
 
 });

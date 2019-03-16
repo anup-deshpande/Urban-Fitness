@@ -47,6 +47,29 @@ module.exports.deleteUserItem=function(itemCode){
 }
 
 
+module.exports.updateUserItem=function(itemCode,rating,Triedit,flag){
+    for(let i=0;i<userItemsList.length;i++)
+    {
+
+        if(userItemsList[i].itemCode==itemCode)
+        {
+            if(flag==0)
+            {
+                if(userItemsList[i].TriedIt!=Triedit) {
+                    userItemsList[i].TriedIt = Triedit;
+                }
+            }
+            if(flag==1) {
+                if (userItemsList[i].Rating != rating) {
+                    userItemsList[i].Rating = rating;
+                }
+            }
+
+
+        }
+    }
+
+}
 
 module.exports.userProfile=userProfile;
 

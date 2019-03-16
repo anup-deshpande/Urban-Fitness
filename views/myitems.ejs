@@ -28,7 +28,7 @@
 				<th>Workout</th>
 				<th>Muscle Group</th>
 				<th>My Rating</th>
-				<th></th>
+				<th>Tried It</th>
 				<th></th>
 
 			</tr>
@@ -37,21 +37,36 @@
 			<tbody>
 			<% for(var j=0;j<UserItems.length;j++){ %>
 				<tr>
-				<td><a href="#"><%= UserItems[j].itemName %></a></td>
+				<td><%= UserItems[j].itemName %></td>
 				<td><%= UserItems[j].catalogCategory %></td>
 
 				<td>
+					<% for(let i=0;i<UserItems[j].Rating;i++){%>
+						<span class="fa fa-star checked"></span>
+					<%}%>
 
-					<span class="fa fa-star checked"></span>
-					<span class="fa fa-star"></span>
-
+					<% for(let i=0;i<5-UserItems[j].Rating;i++){%>
+						<span class="fa fa-star"></span>
+					<%}%>
 				</td>
-				<td><a href="/feedback" class="button Update-button">Update</a></td>
+
+				<td>
+					<%if(UserItems[j].TriedIt=="Yes"){ %>
+						<input type="checkbox" checked="checked" disabled>
+					<%}else{%>
+						<input type="checkbox" disabled>
+					<%}%>
+				</td>
+
 				<td>
 
-					<form id="form-deleteIt" method="post" action="/profile/myitems">
+					<form id="form-myitems" method="post" action="/profile/myitems">
 						<input type="hidden" name="itemCode" value="<%= UserItems[j].itemCode %>">
-						<button class="button Delete-button" type="submit" name="action" value="delete">Delete</button>
+						<input type="hidden" name="itemRating" value="<%= UserItems[j].Rating %>">
+						<input type="hidden" name="itemTriedit" value="<%= UserItems[j].TriedIt %>">
+
+						<button class="button Update-button" type="submit" name="action" value="updateProfile">Update</button>
+						<button class="button Delete-button" type="submit" name="action" value="deleteItem">Delete</button>
 					</form>
 				</td>
 			</tr>

@@ -61,7 +61,7 @@ var data = [
         itemCode: 3,
         itemName: "Leg Press",
         catalogCategory: "Leg",
-        Description: "1. Using a leg press machine, sit down on the machine and place your legs on the platform directly in front of you at a medium foot stance. 2. Lower the safety bars holding the weighted platform in place and press the platform all the way up until your legs are fully extended in front of you.3. As you inhale, slowly lower the platform until your upper and lower legs make a 90-degree angle.Pushing mainly with the heels of your feet and using the quadriceps go back to the starting position as you exhale.4. Repeat for the recommended amount of repetitions and ensure to lock the safety pins properly once you are done. You do not want that platform falling on you fully loaded. Caution:Always check to make sure that when you re-rack the weight the platform is securely locked.",
+        Description: "1. Using a leg press machine, sit down on the machine and place your legs on the platform directly in front of you at a medium foot stance. 2. Lower the safety bars holding the weighted platform in place and press the platform all the way up until your legs are fully extended in front of you.3. As you inhale, slowly lower the platform until your upper and lower legs make a 90-degree angle.Pushing mainly with the heels of your feet and using the quadriceps go back to the starting position as you exhale.",
         Rating: 4,
         imageURL: "../assets/images/item1.gif"
 
@@ -75,7 +75,7 @@ var data = [
       itemCode: 4,
       itemName: "Reverse Crunch",
       catalogCategory: "Abs & Core",
-      Description: "1. Lie down on the floor with your legs fully extended and arms to the side of your torso with the palms on the floor. Your arms should be stationary for the entire exercise. 2. Move your legs up so that your thighs are perpendicular to the floor and feet are together and parallel to the floor. This is the starting position. 3. While inhaling, move your legs towards the torso as you roll your pelvis backwards and you raise your hips off the floor. At the end of this movement your knees will be touching your chest. 4. Hold the contraction for a second and move your legs back to the starting position while exhaling. 5. Repeat for the recommended amount of repetitions.",
+      Description: "1. Lie down on the floor with your legs fully extended and arms to the side of your torso with the palms on the floor. Your arms should be stationary for the entire exercise. 2. Move your legs up so that your thighs are perpendicular to the floor and feet are together and parallel to the floor. This is the starting position. 3. While inhaling, move your legs towards the torso as you roll your pelvis backwards and you raise your hips off the floor. At the end of this movement your knees will be touching your chest. ",
       Rating: 4,
       imageURL: "../assets/images/item4.gif"
     },

@@ -29,12 +29,12 @@
 			<input type="hidden" name="itemName" value="<%= data.item.itemName %>">
 			<input type="hidden" name="itemRating" value="<%= data.item.Rating %>">
 			<input type="hidden" name="category" value="<%= data.item.catalogCategory %>">
-			<button class="button Save-button" type="submit" name="action" value="saveIt"><i class="fa fa-bookmark" aria-hidden="true"></i>Save</button>
+			<button class="button Save-button" type="submit" name="action" value="save"><i class="fa fa-bookmark" aria-hidden="true"></i>Save</button>
 		</form>
 
 
-		<form id="form-rateIt" method="post" action="/feedback">
-			<input type="hidden" name="item" value="<%= data.item %>">
+		<form id="form-rateIt" method="post" action="/profile/myitems">
+			<input type="hidden" name="itemCode" value="<%= data.item.itemCode %>">
 			<button class="button Rate-button" type="submit" name="action" value="rateIt"><i class="fa fa-star" aria-hidden="true"></i>Rate</button>
 		</form>
 

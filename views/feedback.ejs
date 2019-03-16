@@ -11,9 +11,10 @@
 
 	<meta charset="UTF-8">
 	<title>Rating | Urban Fitness</title>
+
 	</head>
 
-<body>
+	<div>
 
 	<% include partials/header.ejs %>
 
@@ -21,31 +22,49 @@
 
 	<div class="main-content">
 		<h3>Give your feedback for</h3>
-		<a href="/categories" class="button Back-button"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
-		<img src='../assets/images/item2.gif' alt="No Image Found">
-		<h2>Lunges</h2>
-		<h4>Muscle Group : Leg</h4>
-		<p>1. Stand tall with feet hip-width apart. Engage core.2. Take a big step forward with right leg and start to shift weight forward so heel hits the floor first.3. Lower body until right thigh is parallel to floor and right shin is vertical (it's okay if knee shifts forward a little as long as it doesn't go past right toe). If mobility allows, lightly tap left knee to ground while keeping weight in right heel.4. Press into right heel to drive back up to starting position.5.Repeat on the other side.</p>
-		<a href="/myitems" class="button Confirm-Rate-button"><i class="fa fa-check-circle"></i> Confirm Rating</a>
-		<a href="#" class="button Designed-It-button"><i class="fa fa-pencil" aria-hidden="true"></i> Designed It</a>
+		<a href="/myitems" class="button Back-button"><i class="fa fa-chevron-left" aria-hidden="true"></i> Back</a>
+		<img src='<%= theItem.imageURL %>' alt="No Image Found">
+		<h2><%=theItem.itemName %></h2>
+		<h4>Muscle Group : <%= theItem.catalogCategory %></h4>
+		<p><%= theItem.Description %></p>
+
+
+
+		<form action="/profile/myitems" method="post">
+
+			<input type="radio" name="TriedIt" value="Yes">Yes
+			<input type="radio" name="TriedIt" value="No" checked="checked">No
+			<input type="hidden" name="itemCode" value="<%= theItem.itemCode %>">
+			<button class="button update-button" name="action" value="updateFlag" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i> Update Tried It</button>
+
+		</form>
 
 	</div>
+
 
 
 	<h4 id="rating-label"> Rate this workout: </h4>
 
-	<div class="feedback-rating">
-		<input type="radio" name="star" id="star1"><label for="star1"></label>
-		<input type="radio" name="star" id="star2"><label for="star2"></label>
-		<input type="radio" name="star" id="star3"><label for="star3"></label>
-		<input type="radio" name="star" id="star4"><label for="star4"></label>
-		<input type="radio" name="star" id="star5"><label for="star5"></label>
-	</div>
+		<form action="/profile/myitems" method="post">
+
+		<div class="feedback-rating">
+			<input type="radio" name="star" id="star1" value=5><label for="star1"></label>
+			<input type="radio" name="star" id="star2" value=4><label for="star2"></label>
+			<input type="radio" name="star" id="star3" value=3><label for="star3"></label>
+			<input type="radio" name="star" id="star4" value=2><label for="star4"></label>
+			<input type="radio" name="star" id="star5" value=1><label for="star5"></label>
+			<input type="hidden" name="itemCode" value="<%= theItem.itemCode %>">
+			<button class="button Confirm-Rate-button" name="action" value="updateRating" type="submit"><i class="fa fa-check-circle"></i> Confirm Rating</button>
+		</div>
+		</form>
+
+
+
 
 	<% include partials/site-navigation.ejs %>
 	<% include partials/footer.ejs %>
 
 </body>
 
-
+</div>
 </html>
