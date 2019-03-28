@@ -27,6 +27,16 @@ profilerouter.post('/signin',urlencodedParser,function (req,res) {
 });
 
 
+profilerouter.post('/signOut',urlencodedParser,function (req,res) {
+
+    req.session.destroy();
+    res.render('home',{theUser:null});
+
+});
+
+
+
+
 profilerouter.post('/myitems',urlencodedParser,function (req,res) {
 
     if(req.session.userProfile){
@@ -35,7 +45,7 @@ profilerouter.post('/myitems',urlencodedParser,function (req,res) {
 
             userdb.addUserItem(req.body.itemCode,req.body.category,req.body.itemName,0,false);
             let useritems=userdb.getUserItems();
-            res.render('myitems',{UserItems:useritems});
+            res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
         }
 
         else if(req.body.action=="deleteItem"){
@@ -44,7 +54,7 @@ profilerouter.post('/myitems',urlencodedParser,function (req,res) {
             userdb.deleteUserItem(req.body.itemCode);
 
             let useritems=userdb.getUserItems();
-            res.render('myitems',{UserItems:useritems});
+            res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
         }
 
 
@@ -62,12 +72,12 @@ profilerouter.post('/myitems',urlencodedParser,function (req,res) {
             for (let i=0;i<useritems.length;i++){
                 if(req.body.itemCode==useritems[i].itemCode){
                   flag=1;
-                  res.render('feedback',{theItem:item});
+                  res.render('feedback',{theItem:item,theUser:req.session.theUser});
                 }
             }
 
             if(flag==0){
-                res.render('myitems',{UserItems:useritems});
+                res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
             }
 
 
@@ -79,14 +89,14 @@ profilerouter.post('/myitems',urlencodedParser,function (req,res) {
                 let itemdb=require('../utility/itemdb');
                 userdb.updateUserItem(req.body.itemCode,null,"Yes",0);
                 let useritems=userdb.getUserItems();
-                res.render('myitems',{UserItems:useritems});
+                res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
 
             }else{
                 let userdb=require('../model/userprofile');
                 let itemdb=require('../utility/itemdb');
                 userdb.updateUserItem(req.body.itemCode,null,"No",0);
                 let useritems=userdb.getUserItems();
-                res.render('myitems',{UserItems:useritems});
+                res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
             }
 
         }
@@ -105,7 +115,7 @@ profilerouter.post('/myitems',urlencodedParser,function (req,res) {
                 console.log("Stars is : 0");
             }
             let useritems=userdb.getUserItems();
-            res.render('myitems',{UserItems:useritems});
+            res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
         }
 
         else if(req.body.action=="rateIt"){
@@ -121,12 +131,12 @@ profilerouter.post('/myitems',urlencodedParser,function (req,res) {
             for (let i=0;i<useritems.length;i++){
                 if(req.body.itemCode==useritems[i].itemCode){
                     flag=1;
-                    res.render('feedback',{theItem:item});
+                    res.render('feedback',{theItem:item,theUser:req.session.theUser});
                 }
             }
 
             if(flag==0){
-                res.render('myitems',{UserItems:useritems});
+                res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
             }
 
         }

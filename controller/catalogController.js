@@ -4,35 +4,58 @@ var item=require('../model/item');
 var useritem=require('../model/useritem');
 var bodyParser=require('body-parser');
 var session=require('express-session');
+var user=require('../model/user');
+var userDB=require('../utility/userDB');
 
 var router=express.Router();
 var urlencodedParser=bodyParser.urlencoded({extended:false});
 
 router.use(session({secret:'abcd'}));
 
-router.get('/',function(req,res) {
-  res.render('home');
+router.get('/',urlencodedParser,function(req,res) {
+  if(req.session.theUser){
+    res.render('home',{theUser:req.session.theUser});
+  }else{
+    res.render('home',{theUser:null});
+  }
+
 });
 
-router.get('/home',function(req,res) {
-  res.render('home');
+router.get('/home',urlencodedParser,function(req,res) {
+  if(req.session.theUser){
+    //let theUser=userDB.getUser(req.session.theUser.);
+    res.render('home',{theUser:req.session.theUser});
+    //console.log("user is:"+JSON.stringify(req.session.theUser));
+  }else{
+    res.render('home',{theUser:null});
+  }
 });
 
 router.get('/home*',function(req,res){
-  res.redirect('home');
+  if(req.session.theUser) {
+    res.redirect('home',{theUser:req.session.theUser});
+  }else{
+    res.redirect('home',{theUser:null});
+  }
 });
 
 
 router.get('/categories',function(req,res) {
+
   var categories=getCategories();
   var itemData= itemDb.getItems();
 
   var data= {
-      categories: categories,
-      items: itemData
+    categories: categories,
+    items: itemData
   };
 
-  res.render('categories',{data: data});
+  if(req.session.theUser) {
+    res.render('categories',{data: data,theUser:req.session.theUser});
+  }else{
+    res.render('categories',{data: data,theUser:null});
+  }
+
 });
 
 router.get('/categories/item',function(req,res) {
@@ -43,13 +66,20 @@ router.get('/categories/item',function(req,res) {
     item: item
   };
 
-  if (itemCode<=0) {
-    res.redirect('/categories');
-  }
-  else if (itemCode>itemDb.getCountofItems()) {
-    res.redirect('/categories');
-  }else {
-    res.render('item',{data:data});
+  if(req.session.theUser) {
+    //res.render('categories',{data: data,theUser:req.session.theUser});
+
+    if (itemCode<=0) {
+      res.redirect('/categories',{theUser:req.session.theUser});
+    }
+    else if (itemCode>itemDb.getCountofItems()) {
+      res.redirect('/categories',{theUser:req.session.theUser});
+    }else {
+      res.render('item',{data:data,theUser:req.session.theUser});
+    }
+
+  }else{
+    res.render('item',{data:data,theUser:null});
   }
 
 });
@@ -62,7 +92,7 @@ router.get('/myitems',function(req,res) {
       if (req.session.userProfile){
         let userdb=require('../model/userprofile');
         let useritems=userdb.getUserItems();
-        res.render('myitems',{UserItems:useritems});
+        res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
       }
   } else{
     res.send('Please login to continue..');
@@ -73,27 +103,51 @@ router.get('/myitems',function(req,res) {
 
 
 router.get('/feedback',function(req,res) {
-  res.render('feedback');
+  if(req.session.theUser){
+    res.render('feedback',{theUser:req.session.theUser});
+  }else{
+    res.render('feedback',{theUser:null});
+  }
 });
 
 router.get('/about',function(req,res) {
-  res.render('about');
+  if(req.session.theUser){
+    res.render('about',{theUser:req.session.theUser});
+  }else{
+    res.render('about',{theUser:null});
+  }
 });
 
 router.get('/about*',function(req,res) {
-  res.redirect('/about');
+  if(req.session.theUser){
+    res.redirect('/about',{theUser:req.session.theUser});
+  }else{
+    res.redirect('/about',{theUser:null});
+  }
 });
 
 router.get('/contact',function(req,res) {
-  res.render('contact');
+  if(req.session.theUser){
+    res.render('contact',{theUser:req.session.theUser});
+  }else{
+    res.render('contact',{theUser:null});
+  };
 });
 
 router.get('/contact*',function(req,res) {
-  res.redirect('/contact');
+  if(req.session.theUser){
+    res.redirect('/contact',{theUser:req.session.theUser});
+  }else{
+    res.redirect('/contact',{theUser:null});
+  }
 });
 
 router.get('/*',function(req,res) {
-  res.redirect('/home');
+  if(req.session.theUser){
+    res.redirect('/home',{theUser:req.session.theUser});
+  }else{
+    res.redirect('/home',{theUser:null});
+  }
 });
 
 var categories=[];

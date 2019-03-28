@@ -1,9 +1,14 @@
 <div class="topnav">
 
+	<% if(theUser==null){ %>
 	<form id="form-signIn" method="post" action="/profile/signin">
 		<a onclick="document.getElementById('form-signIn').submit();">Sign In</a>
 	</form>
-
+	<%}else{%>
+	<form id="form-signOut" method="post" action="/profile/signOut">
+			<a onclick="document.getElementById('form-signOut').submit();">Sign Out</a>
+	</form>
+	<%}%>
 	<a href="/myitems">My Workouts</a>
 
 	<a href="#">Cart</a>

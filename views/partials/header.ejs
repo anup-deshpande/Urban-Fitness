@@ -1,4 +1,9 @@
 <div class="title-info">
+
+   <%if (theUser){ %>
+      <h6>Welcome <%= theUser.FirstName%></h6>
+   <%}else { %>
    <h6>Not Signed In</h6>
+      <%}%>
    <h1>Urban Fitness</h1>
 </div>
