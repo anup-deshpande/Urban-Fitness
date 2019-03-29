@@ -169,31 +169,35 @@ body{
 }
 
 .button{
-  font-size:13.5px;
+	font-size:13.5px;
+	font-family:'Montserrat', sans-serif;
   text-decoration: none;
   background-color: #EEEEEE;
   border-radius:6px;
   color: white;
   padding: 5px 9px 5px 9px;
-  background-color:#4CAF50;
+	background-color:#4CAF50;
+	border: 0px;
 }
 
 .Save-button {
-   margin-left:23px;
+	 margin-left:18px;
+	 float: left;
 }
 
 .Rate-button {
-  margin-left:7px;
+	margin-left:7px;
+	
 }
 
 .Update-button{
-	margin:0px;
+	margin-left:10px;
 }
 
 .Confirm-Rate-button {
-	 position:absolute;
-	 margin-top: 80px;
-	 margin-left:25px;
+	 margin-top:30px;
+	 margin-left:35px;
+	 
 }
 
 .Designed-It-button {
@@ -243,8 +247,8 @@ body{
 .feedback-rating{
 	float: left;
 	position: absolute;
-	top: 60%;
-	left: 45%;
+	top: 61%;
+	margin-left: 33%;
 	display: flex;
 	flex-direction: row-reverse;
 }
@@ -419,6 +423,14 @@ body{
 	margin-bottom: 6px;
 }
 
+.feedback-updateIt{
+	
+	margin-left: 18px;
+	float: left;
+	
+	
+}
+
 #index-paragraph{
 	margin-top:40px;
 	font-size:16px;
@@ -440,7 +452,7 @@ body{
 #rating-label{
 	font-family: 'Montserrat', sans-serif;
 	margin-left: 460px;
-	margin-top: 280px;
+	margin-top: 287px;
 	float: left;
 }
 

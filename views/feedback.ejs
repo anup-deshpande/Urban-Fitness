@@ -29,16 +29,16 @@
 		<p><%= theItem.Description %></p>
 
 
-
-		<form action="/profile/myitems" method="post">
+		
+		<form class="feedback-updateIt" action="/profile/myitems" method="post">
 
 			<input type="radio" name="TriedIt" value="Yes">Yes
 			<input type="radio" name="TriedIt" value="No" checked="checked">No
 			<input type="hidden" name="itemCode" value="<%= theItem.itemCode %>">
-			<button class="button update-button" name="action" value="updateFlag" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i> Update Tried It</button>
+		    <button class="button Update-button" name="action" value="updateFlag" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i> Update Tried It</button>
 
 		</form>
-
+		
 	</div>
 
 
