@@ -1,5 +1,21 @@
-class item{
+var mongoose=require('mongoose');
+var Schema=mongoose.Schema;
 
+
+var itemSchema=new Schema({
+  itemCode:Number,
+  itemName:String,
+  catalogCategory:String,
+  Description:String,
+  Rating:Number,
+  imageURL:String
+},{collection:'Items'});
+
+module.exports=mongoose.model('item',itemSchema);
+
+
+
+/*class item{
 
   constructor(itemCode,itemName,catalogCategory,Description,Rating,imageURL){
       this.itemCode=itemCode;
@@ -62,3 +78,4 @@ class item{
 }
 
 module.exports=item;
+*/

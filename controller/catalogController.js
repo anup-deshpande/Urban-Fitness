@@ -1,6 +1,6 @@
 var express=require('express');
 var itemDb = require('../utility/ItemDB');
-var item=require('../model/item');
+var itemModel=require('../model/item');
 var useritem=require('../model/useritem');
 var bodyParser=require('body-parser');
 var session=require('express-session');
@@ -9,6 +9,10 @@ var userDB=require('../utility/userDB');
 
 var router=express.Router();
 var urlencodedParser=bodyParser.urlencoded({extended:false});
+
+var mongoose=require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/UrbanFitnessDB',{useNewUrlParser:true});
 
 router.use(session({secret:'abcd'}));
 
@@ -40,11 +44,12 @@ router.get('/home*',function(req,res){
 });
 
 
-router.get('/categories',function(req,res) {
+router.get('/categories',async function(req,res) {
 
-  var categories=getCategories();
-  var itemData= itemDb.getItems();
-
+  var categories=await getCategories();
+  var itemData= await itemDb.getAllItems(itemModel);
+  
+  
   var data= {
     categories: categories,
     items: itemData
@@ -57,6 +62,7 @@ router.get('/categories',function(req,res) {
   }
 
 });
+
 
 router.get('/categories/item',function(req,res) {
   var itemCode=req.query.itemCode;
@@ -146,20 +152,21 @@ router.get('/*',function(req,res) {
   if(req.session.theUser){
     res.redirect('/home',{theUser:req.session.theUser});
   }else{
-    res.redirect('/home',{theUser:null});
+    res.redirect('/home');
   }
 });
 
 var categories=[];
 
-let getCategories=function(){
-  var data = itemDb.getItems();
-  data.forEach(function (item) {
-      if(!categories.includes(item.catalogCategory)){
-          categories.push(item.catalogCategory);
-      }
-
-  });
+var getCategories= async function(){
+  var data = await itemDb.getAllItems(itemModel);
+  
+  for(var i=0;i<data.length;i++){
+    if(!categories.includes(data[i].catalogCategory)){
+      categories.push(data[i].catalogCategory);
+    }
+  }
+  
   return categories;
 };
 

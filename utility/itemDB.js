@@ -1,5 +1,15 @@
 var Item = require('../model/item');
 
+
+module.exports.getAllItems=function(db){
+    return new Promise((resolve,reject)=>{
+        db.find({})
+            .then(data => {
+                resolve(data);
+            }).catch(err=>{return reject(err); })
+    })
+};
+
 module.exports.getItems = function () {
 
     let items = [];
