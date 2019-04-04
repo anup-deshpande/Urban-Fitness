@@ -64,21 +64,19 @@ router.get('/categories',async function(req,res) {
 });
 
 
-router.get('/categories/item',function(req,res) {
+router.get('/categories/item',async function(req,res) {
   var itemCode=req.query.itemCode;
-  var item= itemDb.getItem(itemCode);
+  var item= await itemDb.getItem(itemCode,itemModel);
 
   var data= {
     item: item
   };
 
   if(req.session.theUser) {
-    //res.render('categories',{data: data,theUser:req.session.theUser});
-
     if (itemCode<=0) {
       res.redirect('/categories',{theUser:req.session.theUser});
     }
-    else if (itemCode>itemDb.getCountofItems()) {
+    else if (itemCode>itemDb.getCountofItems(itemModel)) {
       res.redirect('/categories',{theUser:req.session.theUser});
     }else {
       res.render('item',{data:data,theUser:req.session.theUser});
@@ -150,7 +148,7 @@ router.get('/contact*',function(req,res) {
 
 router.get('/*',function(req,res) {
   if(req.session.theUser){
-    res.redirect('/home',{theUser:req.session.theUser});
+    res.redirect('/home');
   }else{
     res.redirect('/home');
   }

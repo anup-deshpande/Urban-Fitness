@@ -10,7 +10,27 @@ module.exports.getAllItems=function(db){
     })
 };
 
-module.exports.getItems = function () {
+
+module.exports.getItem=function(code,db){
+    return new Promise((resolve,reject)=>{
+        db.findOne({itemCode:code})
+            .then(data => {
+                resolve(data);
+            }).catch(err=>{return reject(err); })
+    })
+};
+
+module.exports.getCountofItems = function(db){
+    return db.find().count(function(err,count){
+        if(err){
+            console.log("Error Occured in getCountofItems : "+err);            
+        }
+    });
+};
+
+
+
+/*module.exports.getItems = function () {
 
     let items = [];
     for (let i = 0; i < data.length; i++) {
@@ -25,29 +45,11 @@ module.exports.getItems = function () {
 
     }
     return items;
-};
+};*/
 
-module.exports.getItem = function (itemCode) {
 
-    for (var i = 0; i < data.length; i++) {
-        if (parseInt(data[i].itemCode) == itemCode) {
-            let item = new Item(data[i].itemCode,
-                data[i].itemName,
-                data[i].catalogCategory,
-                data[i].Description,
-                data[i].Rating,
-                data[i].imageURL
-                )
 
-            return item;
-        }
-    }
-};
-
-module.exports.getCountofItems = function(){
-    return data.length;
-};
-
+/*
 var data = [
     {
       itemCode: 1,
@@ -109,3 +111,4 @@ var data = [
     }];
 
 var category = ["Leg", "Abs & Core"];
+*/

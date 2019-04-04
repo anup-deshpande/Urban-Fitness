@@ -1,60 +1,31 @@
 var User = require('../model/user');
 
-module.exports.getUsers = function () {
 
-    let users = [];
-    for (let i = 0; i < data.length; i++) {
-        let user = new user(data[i].UserID,
-            data[i].FirstName,
-            data[i].LastName,
-            data[i].EmailAddress,
-            data[i].Address1,
-            data[i].Address2,
-            data[i].City,
-            data[i].State,
-            data[i].ZipCode,
-            data[i].Country
-        );
-
-        users.push(user);
-
-    }
-    return users;
+module.exports.getAllUsers = function (db) {
+    return new Promise((resolve,reject)=>{
+        db.find({})
+            .then(data => {
+                resolve(data);
+            }).catch(err=>{return reject(err); })
+    })      
 };
 
-module.exports.getUser=function(userID){
+module.exports.getUser=function(userID,db){
 
-    let user;
-
-    for(var i=0;i<data.length;i++){
-        if(data[i].UserID == userID){
-             user = new User(data[i].UserID,
-                data[i].FirstName,
-                data[i].LastName,
-                data[i].EmailAddress,
-                data[i].Address1,
-                data[i].Address2,
-                data[i].City,
-                data[i].State,
-                data[i].ZipCode,
-                data[i].Country
-            );
-
-
-
-        }
-    }
-
-    return user;
-
-
+    return new Promise((resolve,reject)=>{
+        db.findOne({UserID:userID})
+            .then(data => {
+                resolve(data);
+            }).catch(err=>{return reject(err); })
+    })
 };
+
 module.exports.getCountofUsers = function(){
     return data.length;
 };
 
 
-var data = [
+/*var data = [
     {
         UserID: 1,
         FirstName: "Bob",
@@ -66,4 +37,4 @@ var data = [
         State: "NC",
         ZipCode: 28262,
         Country: "United States",
-    }];
+    }];*/

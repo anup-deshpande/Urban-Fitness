@@ -1,8 +1,9 @@
 var express=require('express');
-var item=require('../model/item');
+var itemModel=require('../model/item');
 var itemDb = require('../utility/ItemDB');
-var user=require('../model/user');
-var useritem=require('../model/useritem');
+var userModel=require('../model/user');
+var useritemModel=require('../model/useritem');
+var UserItemsDB=require('../utility/userItemDB');
 var bodyParser=require('body-parser');
 var session=require('express-session');
 
@@ -11,16 +12,16 @@ var urlencodedParser=bodyParser.urlencoded({extended:false});
 
 profilerouter.use(session({secret:'abcd'}));
 
-profilerouter.post('/signin',urlencodedParser,function (req,res) {
+profilerouter.post('/signin',urlencodedParser,async function (req,res) {
     var userObject=require('./../model/user');
     var userDB=require('./../utility/userDB');
     let userprofile=require('./../model/userprofile');
 
-    userObject=userDB.getUser(1);
+    userObject=await userDB.getUser(1,userModel);
 
 
     req.session.theUser=userObject;
-    req.session.userProfile=userprofile.getUserItems();
+    req.session.userProfile=await userprofile.getUserItems(userModel);
 
     res.render('myitems',{UserItems:req.session.userProfile,theUser:req.session.theUser});
 
@@ -37,41 +38,40 @@ profilerouter.post('/signOut',urlencodedParser,function (req,res) {
 
 
 
-profilerouter.post('/myitems',urlencodedParser,function (req,res) {
+profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
     if(req.session.userProfile){
         if (req.body.action=="save"){
-            let userdb=require('../model/userprofile');
-
-            userdb.addUserItem(req.body.itemCode,req.body.category,req.body.itemName,0,false);
-            let useritems=userdb.getUserItems();
-            res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
+            await UserItemsDB.addUserItem(req.body.itemCode,1,req.body.category,req.body.itemName);
+            var userItems=await UserItemsDB.getUserItems(1);
+            res.render('myitems',{UserItems:userItems,theUser:req.session.theUser});
         }
 
         else if(req.body.action=="deleteItem"){
             let userdb=require('../model/userprofile');
 
-            userdb.deleteUserItem(req.body.itemCode);
+            await UserItemsDB.deleteUserItem(req.body.itemCode);
 
-            let useritems=userdb.getUserItems();
+            let useritems=await userdb.getUserItems();
             res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
         }
 
 
 
         else if (req.body.action=="updateProfile"){
-            let userdb=require('../model/userprofile');
-            let itemdb=require('../utility/itemdb');
-            //userdb.updateUserItem(req.body.itemCode,req.body.itemRating,req.body.itemTriedIt);
-            let useritems=userdb.getUserItems();
-            let item=itemdb.getItem(req.body.itemCode);
-            //item.Rating=req.body.itemRating;
+            
+            var itemdb=require('../utility/itemdb');
+            var useritems=await UserItemsDB.getUserItems(1);
+            var item=await itemdb.getItem(req.body.itemCode,itemModel);
+            
 
             let flag=0;
 
             for (let i=0;i<useritems.length;i++){
                 if(req.body.itemCode==useritems[i].itemCode){
                   flag=1;
+                  console.log("Stringify : "+JSON.stringify(item));
+                  
                   res.render('feedback',{theItem:item,theUser:req.session.theUser});
                 }
             }
@@ -142,7 +142,7 @@ profilerouter.post('/myitems',urlencodedParser,function (req,res) {
         }
 
     }else{
-        res.send('No Session Found');
+        res.send('Please sign in to continue..');
     }
 
 });

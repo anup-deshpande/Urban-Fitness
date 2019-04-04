@@ -1,4 +1,25 @@
-class user{
+var mongoose=require('mongoose');
+var Schema=mongoose.Schema;
+
+
+var userSchema=new Schema({
+    UserID:String,
+    Password:String,
+    FirstName:String,
+    LastName:String,
+    EmailAddress:String,
+    Address1:String,
+    Address2:String,
+    City:String,
+    State:String,
+    ZipCode:Number,
+    Country:String
+  },{collection:'Users'});
+  
+  module.exports=mongoose.model('user',userSchema);
+
+
+/*class user{
 
 
     constructor(UserID,FirstName,LastName,EmailAddress,Address1,Address2,City,State,ZipCode,Country){
@@ -121,4 +142,4 @@ class user{
 
 }
 
-module.exports=user;
+module.exports=user;*/
