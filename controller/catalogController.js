@@ -1,11 +1,12 @@
 var express=require('express');
 var itemDb = require('../utility/ItemDB');
 var itemModel=require('../model/item');
-var useritem=require('../model/useritem');
+var useritemModel=require('../model/useritem');
 var bodyParser=require('body-parser');
 var session=require('express-session');
 var user=require('../model/user');
 var userDB=require('../utility/userDB');
+var UserItemsDB=require('../utility/userItemDB');
 
 var router=express.Router();
 var urlencodedParser=bodyParser.urlencoded({extended:false});
@@ -91,11 +92,17 @@ router.get('/categories/item',async function(req,res) {
 
 
 
-router.get('/myitems',function(req,res) {
-  if (req.session.theUser){
-      if (req.session.userProfile){
-        let userdb=require('../model/userprofile');
-        let useritems=userdb.getUserItems();
+router.get('/myitems',async function(req,res) {
+
+  console.log("inside myitems");
+    if (req.session.theUser){
+      if (req.session.userProfile){  
+        console.log("inside of if myitems");
+        
+        var useritems=await UserItemsDB.getUserItems(1);
+
+        console.log("userItems stringify : "+JSON.stringify(useritems));
+        
         res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
       }
   } else{

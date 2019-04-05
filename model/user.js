@@ -3,7 +3,7 @@ var Schema=mongoose.Schema;
 
 
 var userSchema=new Schema({
-    UserID:String,
+    UserID:Number,
     Password:String,
     FirstName:String,
     LastName:String,
@@ -16,7 +16,7 @@ var userSchema=new Schema({
     Country:String
   },{collection:'Users'});
   
-  module.exports=mongoose.model('user',userSchema);
+  module.exports=mongoose.model('userModel',userSchema);
 
 
 /*class user{

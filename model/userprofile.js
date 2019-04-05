@@ -1,5 +1,5 @@
-let userItemsList=[];
-let userItemModel=require('../model/useritem');
+var userItemsList=[];
+var userItemModel=require('../model/useritem');
 
 let userProfile=function (userID) {
 

@@ -13,15 +13,15 @@ var urlencodedParser=bodyParser.urlencoded({extended:false});
 profilerouter.use(session({secret:'abcd'}));
 
 profilerouter.post('/signin',urlencodedParser,async function (req,res) {
+    
     var userObject=require('./../model/user');
     var userDB=require('./../utility/userDB');
-    let userprofile=require('./../model/userprofile');
+   // let userprofile=require('./../model/userprofile');
 
     userObject=await userDB.getUser(1,userModel);
 
-
     req.session.theUser=userObject;
-    req.session.userProfile=await userprofile.getUserItems(userModel);
+    req.session.userProfile=await UserItemsDB.getUserItems(1);
 
     res.render('myitems',{UserItems:req.session.userProfile,theUser:req.session.theUser});
 
@@ -30,9 +30,11 @@ profilerouter.post('/signin',urlencodedParser,async function (req,res) {
 
 profilerouter.post('/signOut',urlencodedParser,function (req,res) {
 
-    req.session.destroy();
-    res.render('home',{theUser:null});
-
+    if(req.session.theUser){
+       req.session.destroy();
+        res.render('home',{theUser:null});
+    }
+    
 });
 
 
@@ -52,7 +54,7 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
             await UserItemsDB.deleteUserItem(req.body.itemCode);
 
-            let useritems=await userdb.getUserItems();
+            let useritems=await UserItemsDB.getUserItems(1);
             res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
         }
 
@@ -65,7 +67,7 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
             var item=await itemdb.getItem(req.body.itemCode,itemModel);
             
 
-            let flag=0;
+            var flag=0;
 
             for (let i=0;i<useritems.length;i++){
                 if(req.body.itemCode==useritems[i].itemCode){
