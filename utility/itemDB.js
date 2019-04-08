@@ -28,6 +28,16 @@ module.exports.getCountofItems = function(db){
     });
 };
 
+/*module.exports.getCategories=function(db){
+    return new Promise((resolve,reject)=>{
+        db.find({},{'_id':0,'CategoryID':0,'CategoryName':1})
+            .then(data => {
+                resolve(data);
+            }).catch(err=>{return reject(err); })
+    })
+};*/
+
+
 
 
 /*module.exports.getItems = function () {

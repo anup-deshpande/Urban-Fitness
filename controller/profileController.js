@@ -71,9 +71,9 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
             for (let i=0;i<useritems.length;i++){
                 if(req.body.itemCode==useritems[i].itemCode){
-                  flag=1;
-                  console.log("Stringify : "+JSON.stringify(item));
-                  
+                  flag=1;                  
+                  item.Rating=useritems[i].Rating;
+                  item.TriedIt=useritems[i].TriedIt;
                   res.render('feedback',{theItem:item,theUser:req.session.theUser});
                 }
             }
@@ -87,53 +87,48 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
         else if(req.body.action=="updateFlag"){
             if(req.body.TriedIt=="Yes"){
-                let userdb=require('../model/userprofile');
-                let itemdb=require('../utility/itemdb');
-                userdb.updateUserItem(req.body.itemCode,null,"Yes",0);
-                let useritems=userdb.getUserItems();
+                UserItemsDB.addMadeit(req.body.itemCode,1,true);
+                var useritems=await UserItemsDB.getUserItems(1);
                 res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
 
             }else{
-                let userdb=require('../model/userprofile');
-                let itemdb=require('../utility/itemdb');
-                userdb.updateUserItem(req.body.itemCode,null,"No",0);
-                let useritems=userdb.getUserItems();
+                UserItemsDB.addMadeit(req.body.itemCode,1,false);
+                var useritems=await UserItemsDB.getUserItems(1);
                 res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
             }
 
         }
 
         else if(req.body.action=="updateRating"){
-            let userdb=require('../model/userprofile');
-            let itemdb=require('../utility/itemdb');
 
+            var ratingVal=req.body.star;
 
-            let ratingVal=req.body.star;
             if(typeof ratingVal!=="undefined"){
                 console.log("Stars is : "+ratingVal);
-                userdb.updateUserItem(req.body.itemCode,ratingVal,null,1);
+                UserItemsDB.addItemRating(req.body.itemCode,1,ratingVal);
             }else {
-                userdb.updateUserItem(req.body.itemCode,0,null,1);
+                UserItemsDB.addItemRating(req.body.itemCode,1,0);
                 console.log("Stars is : 0");
             }
-            let useritems=userdb.getUserItems();
+
+            var useritems=await UserItemsDB.getUserItems(1);
+            console.log("stringify : "+JSON.stringify(useritems));
+            
             res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
         }
 
         else if(req.body.action=="rateIt"){
-            let userdb=require('../model/userprofile');
-            let itemdb=require('../utility/itemdb');
-            //userdb.updateUserItem(req.body.itemCode,req.body.itemRating,req.body.itemTriedIt);
-            let useritems=userdb.getUserItems();
-            let item=itemdb.getItem(req.body.itemCode);
-            //item.Rating=req.body.itemRating;
+            var itemdb=require('../utility/itemdb');
+            var useritems=await UserItemsDB.getUserItems(1);
+            var item=await itemdb.getItem(req.body.itemCode,itemModel);
+            
 
-            let flag=0;
+            var flag=0;
 
             for (let i=0;i<useritems.length;i++){
                 if(req.body.itemCode==useritems[i].itemCode){
-                    flag=1;
-                    res.render('feedback',{theItem:item,theUser:req.session.theUser});
+                  flag=1;
+                  res.render('feedback',{theItem:item,theUser:req.session.theUser});
                 }
             }
 

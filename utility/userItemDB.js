@@ -1,27 +1,41 @@
 var UserItemsModel = require('../model/useritem');
 
 module.exports.addUserItem=function(itemCode,userID,catalogCategory,itemName){
-  
-    
-  var UserItem=new UserItemsModel({
-    UserID: userID,
-    itemCode: itemCode,
-    itemName: itemName,
-    catalogCategory: catalogCategory,
-   /* Rating: 0,
-    TriedIt:false*/
-  });
-
-  UserItem.save(function(err){
-    
-    if (err) {
-      console.log(err);
-    }else{
-      console.log("new item Added to the database");
-    }
-
-  });
+  return new Promise((resolve,reject)=>{
+    UserItemsModel.findOneAndUpdate({$and:[{UserID:userID},{itemCode:itemCode}]},
+      {$set:{UserID:userID,itemCode:itemCode, catalogCategory:catalogCategory,itemName:itemName,Rating:0,TriedIt:false}},
+      {new:true,upsert:true},function(err,data){
+        console.log(data);
+        resolve(data);        
+      }).catch(err=>{return reject(err);});
+      
+});
 }
+
+
+module.exports.addItemRating=function(itemCode,userID,rating){
+  return new Promise((resolve,reject)=>{
+    UserItemsModel.findOneAndUpdate({$and:[{UserID:userID},{itemCode:itemCode}]},
+      {$set:{UserID:userID,itemCode:itemCode,Rating:rating}},
+      {new:true,upsert:true},function(err,data){
+        //console.log(data);
+        resolve(data);        
+      }).catch(err=>{return reject(err);});
+      
+});
+}
+
+module.exports.addMadeit=function(itemCode,userID,TriedIt){
+  return new Promise((resolve,reject)=>{
+    UserItemsModel.findOneAndUpdate({$and:[{UserID:userID},{itemCode:itemCode}]},
+      {$set:{UserID:userID,itemCode:itemCode,TriedIt:TriedIt}},
+      {new:true,upsert:true},function(err,data){
+        resolve(data);        
+      }).catch(err=>{return reject(err);});
+      
+});
+}
+
 
 
 module.exports.getUserItems=function(userID){
@@ -42,5 +56,9 @@ module.exports.deleteUserItem=function(code){
         }).catch(err=>{return reject(err); })
 });
 }
+
+
+
+
 
 

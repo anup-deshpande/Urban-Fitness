@@ -48,6 +48,17 @@ router.get('/home*',function(req,res){
 router.get('/categories',async function(req,res) {
 
   var categories=await getCategories();
+
+  var categorySchema=new mongoose.Schema({
+      CategoryID:Number,
+      CategoryName:String
+  },{collection:'Categories'});
+
+  var categoryModel=mongoose.model('CategoryModel',categorySchema);
+
+
+  var categories=await itemDb.getCategories(categoryModel);
+  
   var itemData= await itemDb.getAllItems(itemModel);
   
   
@@ -94,15 +105,10 @@ router.get('/categories/item',async function(req,res) {
 
 router.get('/myitems',async function(req,res) {
 
-  console.log("inside myitems");
+  
     if (req.session.theUser){
       if (req.session.userProfile){  
-        console.log("inside of if myitems");
-        
         var useritems=await UserItemsDB.getUserItems(1);
-
-        console.log("userItems stringify : "+JSON.stringify(useritems));
-        
         res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
       }
   } else{
