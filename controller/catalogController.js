@@ -47,8 +47,8 @@ router.get('/home*',function(req,res){
 
 router.get('/categories',async function(req,res) {
 
-  var categories=await getCategories();
-
+ 
+/*
   var categorySchema=new mongoose.Schema({
       CategoryID:Number,
       CategoryName:String
@@ -57,8 +57,9 @@ router.get('/categories',async function(req,res) {
   var categoryModel=mongoose.model('CategoryModel',categorySchema);
 
 
-  var categories=await itemDb.getCategories(categoryModel);
-  
+  var categories=await getCategories(categoryModel);*/
+ 
+  var categories=await getCategories();
   var itemData= await itemDb.getAllItems(itemModel);
   
   

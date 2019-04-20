@@ -14,16 +14,16 @@ profilerouter.use(session({secret:'abcd'}));
 
 profilerouter.post('/signin',urlencodedParser,async function (req,res) {
     
-    var userObject=require('./../model/user');
+   /* var userObject=require('./../model/user');
     var userDB=require('./../utility/userDB');
    // let userprofile=require('./../model/userprofile');
 
     userObject=await userDB.getUser(1,userModel);
 
     req.session.theUser=userObject;
-    req.session.userProfile=await UserItemsDB.getUserItems(1);
-
-    res.render('myitems',{UserItems:req.session.userProfile,theUser:req.session.theUser});
+    req.session.userProfile=await UserItemsDB.getUserItems(1);*/
+    res.render('login',{theUser:null,UserItems:null});
+    //res.render('myitems',{UserItems:req.session.userProfile,theUser:req.session.theUser});
 
 });
 
@@ -139,7 +139,7 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
         }
 
     }else{
-        res.send('Please sign in to continue..');
+        res.render('login',{theUser:null,UserItems:null});
     }
 
 });

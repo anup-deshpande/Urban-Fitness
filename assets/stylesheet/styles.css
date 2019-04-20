@@ -303,7 +303,22 @@ body{
 	margin-top: 8px;
 }
 
+.login-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+	border-radius: 5px;
+	width: 530px;
+	height: 450px;
+	float: left;
+	margin-left: 450px;
+	margin-top: 28px;	
+}
+
 .contact-us-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.login-card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
@@ -324,10 +339,26 @@ body{
 .contact-us-card img {
   border-radius: 5px 5px 0 0;
 	height: 160px;
-
-
 }
 
+.login-card img {
+  border-radius: 5px 5px 0 0;
+	height: 140px;
+}
+
+
+.text-over-image-login{
+	font-family:'Montserrat', sans-serif;
+	color: white;
+}
+
+.text-over-image-login h2{
+	position: absolute;
+	left: 48%;
+	top: 22%;
+	font-size:31px;
+
+}
 
 
 .text-over-image{
@@ -352,8 +383,20 @@ body{
 	font-weight: lighter;
 }
 
+.login-card table{
+	width: 500px;
+	margin-top: 40px;
+	font-family: 'Poppins','sans-serif';
+}
+
+
 .contact-us-card table{
 	width: 500px;
+}
+
+.login-card td{
+	padding-top: 7px;
+	padding-bottom: 7px;
 }
 
 .contact-us-card td{
@@ -361,8 +404,38 @@ body{
 	padding-bottom: 7px;
 }
 
+.login-form input[type=text]{
+  width: 70%;
+  padding: 8px;
+  border: 0;
+	border-bottom: 1px solid #ccc;
+  resize: vertical;
+	float: right;
+	margin-top: 0px;
+	margin-right: 45px;
+	font-family:'Poppins', sans-serif;
+	background: #f2f2f2;
+	border-radius: 13px;
+	padding-left: 20px;
+}
 
-.contact-us-form input[type=text],[type=email], [type=tel], select, textarea {
+.login-form input[type=password]{
+  width: 70%;
+  padding: 8px;
+  border: 0;
+	border-bottom: 1px solid #ccc;
+  resize: vertical;
+	float: right;
+	margin-top: 0px;
+	margin-right: 45px;
+	font-family:'Poppins', sans-serif;
+	background: #f2f2f2;
+	border-radius: 13px;
+	padding-left: 20px;
+}
+
+
+.contact-us-form input[type=text],[type=email], [type=tel],[type=password], select, textarea {
   width: 95%;
   padding: 8px;
   border: 0;
@@ -374,13 +447,33 @@ body{
 	font-family:'Montserrat', sans-serif;
 }
 
+.login-form label{
+	float: left;
+	margin-left: 30px;
+	font-size: 15px;
+}
+
+
 .contact-us-form label{
 	float: left;
 	margin-left: 30px;
 	font-size: 15px;
 }
 
+.Login-button{
+	
+	font-family: 'Poppins','sans-serif';
+	font-size:14px;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  border-radius:10px;
+  color: white;
+  padding: 6px 60px 6px 60px;
+  background-color:#4CAF50;
+}
+
 .Submit-button{
+	font-family: 'Poppins','sans-serif';
 	font-size:14px;
   text-decoration: none;
   background-color: #EEEEEE;
