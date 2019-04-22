@@ -1,9 +1,7 @@
 <div class="topnav">
 
 	<% if(theUser==null){ %>
-	<form id="form-signIn" method="post" action="/profile/signin">
-		<a onclick="document.getElementById('form-signIn').submit();">Sign In</a>
-	</form>
+	<a href="/profile/signIn">Sign In</a>
 	<%}else{%>
 	<form id="form-signOut" method="post" action="/profile/signOut">
 			<a onclick="document.getElementById('form-signOut').submit();">Sign Out</a>

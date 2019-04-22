@@ -26,11 +26,11 @@ router.get('/',urlencodedParser,function(req,res) {
 
 });
 
+
+
 router.get('/home',urlencodedParser,function(req,res) {
   if(req.session.theUser){
-    //let theUser=userDB.getUser(req.session.theUser.);
     res.render('home',{theUser:req.session.theUser});
-    //console.log("user is:"+JSON.stringify(req.session.theUser));
   }else{
     res.render('home',{theUser:null});
   }
@@ -45,12 +45,12 @@ router.get('/home*',function(req,res){
 });
 
 
-router.get('/categories',async function(req,res) {
+router.get('/categories',urlencodedParser,async function(req,res) {
 
  
 /*
   var categorySchema=new mongoose.Schema({
-      CategoryID:Number,
+      CategoryID:Number,  
       CategoryName:String
   },{collection:'Categories'});
 
@@ -68,6 +68,7 @@ router.get('/categories',async function(req,res) {
     items: itemData
   };
 
+  
   if(req.session.theUser) {
     res.render('categories',{data: data,theUser:req.session.theUser});
   }else{
@@ -109,11 +110,11 @@ router.get('/myitems',async function(req,res) {
   
     if (req.session.theUser){
       if (req.session.userProfile){  
-        var useritems=await UserItemsDB.getUserItems(1);
+        var useritems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
         res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
       }
   } else{
-    res.send('Please login to continue..');
+    res.render('login',{UserItems:null,theUser:null});
   }
 
 });
@@ -160,13 +161,14 @@ router.get('/contact*',function(req,res) {
   }
 });
 
+/*
 router.get('/*',function(req,res) {
   if(req.session.theUser){
     res.redirect('/home');
   }else{
     res.redirect('/home');
   }
-});
+});*/
 
 var categories=[];
 

@@ -4,7 +4,7 @@ module.exports.addUserItem=function(itemCode,userID,catalogCategory,itemName){
   return new Promise((resolve,reject)=>{
     UserItemsModel.findOneAndUpdate({$and:[{UserID:userID},{itemCode:itemCode}]},
       {$set:{UserID:userID,itemCode:itemCode, catalogCategory:catalogCategory,itemName:itemName,Rating:0,TriedIt:false}},
-      {new:true,upsert:true},function(err,data){
+      {upsert:true},function(err,data){
         console.log(data);
         resolve(data);        
       }).catch(err=>{return reject(err);});

@@ -21,17 +21,18 @@
       <img src="../assets/images/login-card-background.jpg" alt="login-background not found" style="width:100%">
       <div class="card-container">
         <table class="login-form">
+          <form id="login-form" method="POST" action="/profile/signIn">
           <tr>
-              <td><input type="text" id="UserName" placeholder="Username"></td>
+              <td><input type="text" id="UserName" name="UserName" placeholder="Username"></td>
           </tr>
           <tr>
-              <td><input type="password" id="Password" placeholder="Password"></td>
+              <td><input type="password" id="Password" name="Password" placeholder="Password"></td>
           </tr>
           
           <tr>
-            <td colspan="2" id="login-button-row"><a href="#" class="Login-button">Login</a></td>
+            <td colspan="2"><button class="Login-button" type="submit">Login</button></td>
           </tr>
-
+        </form>
         </table>
       </div>
     </div>

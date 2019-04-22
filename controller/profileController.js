@@ -10,21 +10,19 @@ var session=require('express-session');
 var profilerouter=express.Router();
 var urlencodedParser=bodyParser.urlencoded({extended:false});
 
+const {check,validationResult}=require('express-validator/check');
+
 profilerouter.use(session({secret:'abcd'}));
 
-profilerouter.post('/signin',urlencodedParser,async function (req,res) {
-    
-   /* var userObject=require('./../model/user');
-    var userDB=require('./../utility/userDB');
-   // let userprofile=require('./../model/userprofile');
 
-    userObject=await userDB.getUser(1,userModel);
-
-    req.session.theUser=userObject;
-    req.session.userProfile=await UserItemsDB.getUserItems(1);*/
-    res.render('login',{theUser:null,UserItems:null});
-    //res.render('myitems',{UserItems:req.session.userProfile,theUser:req.session.theUser});
-
+profilerouter.get('/signIn',function (req,res) {   
+    if(req.session.theUser){ 
+        if(req.session.UserProfile){
+            res.render('myitems',{theUser:theUser,UserItems:req.session.UserProfile});
+        }
+    }else{
+        res.render('login',{theUser:null,UserItems:null});
+    }
 });
 
 
@@ -32,20 +30,62 @@ profilerouter.post('/signOut',urlencodedParser,function (req,res) {
 
     if(req.session.theUser){
        req.session.destroy();
-        res.render('home',{theUser:null});
+       res.render('home',{theUser:null});
     }
     
 });
 
 
+profilerouter.post('/signIn',urlencodedParser,[
+        check('UserName').not().isEmpty().isEmail(),
+        check('Password').not().isEmpty().isLength({min:8})
+],async function(req,res){
+
+    if(!validationResult(req).isEmpty()){
+        console.log("Error with the input : ",validationResult(req).mapped());
+        res.redirect('/profile/signIn');
+        return;
+    }else{        
+        var userObject=require('./../model/user');
+        var userDB=require('./../utility/userDB');
+        var username=req.body.UserName;
+        var password=req.body.Password;
+        
+        var users=await userDB.getAllUsers(userModel);
+
+        var flag=false;
+
+        for(var i=0;i<users.length;i++){
+                            
+            if(users[i].EmailAddress==username){
+                if(users[i].Password==password){
+                    flag=true;
+                    req.session.theUser=users[i];
+                    req.session.userProfile=await UserItemsDB.getUserItems(users[i].UserID);
+                    res.render('myitems',{UserItems:req.session.userProfile,theUser:req.session.theUser});            
+                    
+                }                
+            }
+        }
+       
+        
+
+        if(flag==false){
+            res.render('login',{theUser:null,UserItems:null});
+        }
+
+        
+    }
+
+});
 
 
 profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
     if(req.session.userProfile){
         if (req.body.action=="save"){
-            await UserItemsDB.addUserItem(req.body.itemCode,1,req.body.category,req.body.itemName);
-            var userItems=await UserItemsDB.getUserItems(1);
+            await UserItemsDB.addUserItem(req.body.itemCode,req.session.theUser.UserID,req.body.category,req.body.itemName);
+            var userItems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
             res.render('myitems',{UserItems:userItems,theUser:req.session.theUser});
         }
 
@@ -54,7 +94,7 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
             await UserItemsDB.deleteUserItem(req.body.itemCode);
 
-            let useritems=await UserItemsDB.getUserItems(1);
+            let useritems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
             res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
         }
 
@@ -63,7 +103,7 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
         else if (req.body.action=="updateProfile"){
             
             var itemdb=require('../utility/itemdb');
-            var useritems=await UserItemsDB.getUserItems(1);
+            var useritems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
             var item=await itemdb.getItem(req.body.itemCode,itemModel);
             
 
@@ -87,13 +127,13 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
         else if(req.body.action=="updateFlag"){
             if(req.body.TriedIt=="Yes"){
-                UserItemsDB.addMadeit(req.body.itemCode,1,true);
-                var useritems=await UserItemsDB.getUserItems(1);
+                UserItemsDB.addMadeit(req.body.itemCode,req.session.theUser.UserID,true);
+                var useritems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
                 res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
 
             }else{
-                UserItemsDB.addMadeit(req.body.itemCode,1,false);
-                var useritems=await UserItemsDB.getUserItems(1);
+                UserItemsDB.addMadeit(req.body.itemCode,req.session.theUser.UserID,false);
+                var useritems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
                 res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
             }
 
@@ -104,22 +144,22 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
             var ratingVal=req.body.star;
 
             if(typeof ratingVal!=="undefined"){
-                console.log("Stars is : "+ratingVal);
-                UserItemsDB.addItemRating(req.body.itemCode,1,ratingVal);
+                //console.log("Stars is : "+ratingVal);
+                UserItemsDB.addItemRating(req.body.itemCode,req.session.theUser.UserID,ratingVal);
             }else {
-                UserItemsDB.addItemRating(req.body.itemCode,1,0);
-                console.log("Stars is : 0");
+                UserItemsDB.addItemRating(req.body.itemCode,req.session.theUser.UserID,0);
+                //console.log("Stars is : 0");
             }
 
-            var useritems=await UserItemsDB.getUserItems(1);
-            console.log("stringify : "+JSON.stringify(useritems));
+            var useritems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
+            //console.log("stringify : "+JSON.stringify(useritems));
             
             res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
         }
 
         else if(req.body.action=="rateIt"){
             var itemdb=require('../utility/itemdb');
-            var useritems=await UserItemsDB.getUserItems(1);
+            var useritems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
             var item=await itemdb.getItem(req.body.itemCode,itemModel);
             
 
@@ -138,6 +178,7 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
         }
 
+        
     }else{
         res.render('login',{theUser:null,UserItems:null});
     }
