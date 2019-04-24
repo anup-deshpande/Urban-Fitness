@@ -11,6 +11,7 @@ var UserItemsDB=require('../utility/userItemDB');
 var router=express.Router();
 var urlencodedParser=bodyParser.urlencoded({extended:false});
 
+const {check,validationResult}=require('express-validator/check');
 var mongoose=require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/UrbanFitnessDB',{useNewUrlParser:true});
@@ -78,28 +79,54 @@ router.get('/categories',urlencodedParser,async function(req,res) {
 });
 
 
-router.get('/categories/item',async function(req,res) {
+router.get('/categories/item',
+[
+  check('itemCode','Invalid itemCode').not().isEmpty().isNumeric().isLength({min:1})
+],
+async function(req,res) {
+ 
+
+  if(!validationResult(req).isEmpty()){
+    
+    console.log("Error with the input : ",validationResult(req).mapped());
+    var errors =validationResult(req).mapped();
+        
+    res.redirect('/categories');
+    return;
+}else{
+
   var itemCode=req.query.itemCode;
   var item= await itemDb.getItem(itemCode,itemModel);
+  var ItemCount=await itemDb.getCountofItems(itemModel);
 
   var data= {
     item: item
   };
 
   if(req.session.theUser) {
+
     if (itemCode<=0) {
-      res.redirect('/categories',{theUser:req.session.theUser});
+      res.redirect('/categories');
     }
-    else if (itemCode>itemDb.getCountofItems(itemModel)) {
-      res.redirect('/categories',{theUser:req.session.theUser});
+    else if (itemCode>ItemCount) {
+      res.redirect('/categories');
     }else {
       res.render('item',{data:data,theUser:req.session.theUser});
     }
 
   }else{
-    res.render('item',{data:data,theUser:null});
-  }
 
+    if (itemCode<=0) {
+      res.redirect('/categories');
+    }
+    else if (itemCode>ItemCount) {
+      res.redirect('/categories');
+    }else {
+      res.render('item',{data:data,theUser:null});
+    }
+
+  }
+  }
 });
 
 
@@ -114,7 +141,7 @@ router.get('/myitems',async function(req,res) {
         res.render('myitems',{UserItems:useritems,theUser:req.session.theUser});
       }
   } else{
-    res.render('login',{UserItems:null,theUser:null});
+    res.render('login',{UserItems:null,theUser:null,errors:req.session.errors});
   }
 
 });

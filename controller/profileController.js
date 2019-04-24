@@ -15,14 +15,23 @@ const {check,validationResult}=require('express-validator/check');
 profilerouter.use(session({secret:'abcd'}));
 
 
-profilerouter.get('/signIn',function (req,res) {   
-    if(req.session.theUser){ 
-        if(req.session.UserProfile){
+profilerouter.get('/signIn',urlencodedParser,function (req,res) {  
+    
+    if (req.session.errors) {   
+        res.render('login',{UserItems:null,theUser:null,errors:req.session.errors});
+        req.session.errors=null;
+    }
+    else{
+    
+        if(req.session.theUser){ 
+            if(req.session.UserProfile){
             res.render('myitems',{theUser:theUser,UserItems:req.session.UserProfile});
         }
-    }else{
-        res.render('login',{theUser:null,UserItems:null});
-    }
+        }else
+        {
+        res.render('login',{theUser:null,UserItems:null,errors:null});
+        }
+   }
 });
 
 
@@ -37,12 +46,17 @@ profilerouter.post('/signOut',urlencodedParser,function (req,res) {
 
 
 profilerouter.post('/signIn',urlencodedParser,[
-        check('UserName').not().isEmpty().isEmail(),
-        check('Password').not().isEmpty().isLength({min:8})
+        check('UserName','Invalid UserName').not().isEmpty().isEmail(),
+        check('Password','Invalid Password').not().isEmpty().isLength({min:8})
 ],async function(req,res){
-
     if(!validationResult(req).isEmpty()){
         console.log("Error with the input : ",validationResult(req).mapped());
+        var errors =validationResult(req).mapped();
+        if(errors){
+            req.session.errors = errors;
+            
+        }
+        
         res.redirect('/profile/signIn');
         return;
     }else{        
@@ -71,7 +85,10 @@ profilerouter.post('/signIn',urlencodedParser,[
         
 
         if(flag==false){
-            res.render('login',{theUser:null,UserItems:null});
+            console.log('inside iogin if');
+            req.session.errors = {msg: "Either Username or Password is not correct"};
+            res.redirect('/profile/signin');
+
         }
 
         
@@ -80,9 +97,24 @@ profilerouter.post('/signIn',urlencodedParser,[
 });
 
 
-profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
+profilerouter.post('/myitems',urlencodedParser,
+    [ check('itemCode').not().isEmpty().isNumeric({min:1,max:6}),
+      check('itemName').not().isEmpty().isString().optional(),
+      check('itemRating').isNumeric().optional(),
+      check('category').isString().optional(),
+             ],
+    async function (req,res) {
 
-    if(req.session.userProfile){
+    if(!validationResult(req).isEmpty()){
+    
+        console.log("Error with the input : ",validationResult(req).mapped());
+        var errors =validationResult(req).mapped();
+            
+        res.redirect('/myitems');
+        return;
+    }else{
+
+        if(req.session.userProfile){
         if (req.body.action=="save"){
             await UserItemsDB.addUserItem(req.body.itemCode,req.session.theUser.UserID,req.body.category,req.body.itemName);
             var userItems=await UserItemsDB.getUserItems(req.session.theUser.UserID);
@@ -180,8 +212,9 @@ profilerouter.post('/myitems',urlencodedParser,async function (req,res) {
 
         
     }else{
-        res.render('login',{theUser:null,UserItems:null});
+        res.redirect('/profile/signIn');
     }
+}
 
 });
 

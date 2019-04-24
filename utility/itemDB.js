@@ -21,11 +21,15 @@ module.exports.getItem=function(code,db){
 };
 
 module.exports.getCountofItems = function(db){
-    return db.find().count(function(err,count){
-        if(err){
-            console.log("Error Occured in getCountofItems : "+err);            
-        }
-    });
+
+    return new Promise((resolve,reject)=>{
+        db.count()
+            .then(data => {
+                resolve(data);
+            }).catch(err=>{return reject(err); })
+    })
+
+    
 };
 
 /*module.exports.getCategories=function(db){

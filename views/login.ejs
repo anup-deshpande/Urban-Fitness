@@ -15,13 +15,36 @@
     <% include partials/user-navigation.ejs %>
     <% include partials/site-navigation.ejs %>
 
+    
+
 
 
     <div class="login-card">
+        
       <img src="../assets/images/login-card-background.jpg" alt="login-background not found" style="width:100%">
       <div class="card-container">
+        
+        <form id="login-form" method="POST" action="/profile/signIn">
         <table class="login-form">
-          <form id="login-form" method="POST" action="/profile/signIn">
+            <tr>
+                <% if(errors){ %>
+                <ul class="login-errors-list">
+                   
+                    <% for(error in errors){ %>
+                      <%if(error==="UserName"){%>
+                        <li>Invalid Username</li>
+                      <%}%>
+                      <%if(error==="Password"){%>
+                        <li>Invalid Password</li>
+                      <%}%>
+                      <%if(error==="msg"){%>
+                        <li>Either username or password is incorrect. Please try again.</li>
+                      <%}%>
+                    <% } %>
+                  
+                </ul>
+                <% } %>
+          </tr>
           <tr>
               <td><input type="text" id="UserName" name="UserName" placeholder="Username"></td>
           </tr>
@@ -30,10 +53,11 @@
           </tr>
           
           <tr>
-            <td colspan="2"><button class="Login-button" type="submit">Login</button></td>
+            <td><button class="Login-button" type="submit">Login</button></td>
           </tr>
-        </form>
+
         </table>
+      </form>
       </div>
     </div>
 
